@@ -54,7 +54,7 @@ class AuthController extends Controller
                 unset($_SESSION['login_attempts'], $_SESSION['last_attempt']);
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_pseudo'] = $user['pseudo'];
-                $this->redirect(BASE_URL . '/dashboard');
+                $this->redirect(BASE_URL . '/profil');
             } else {
                 $_SESSION['login_attempts']++;
                 $_SESSION['last_attempt'] = $now;
