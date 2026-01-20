@@ -1,0 +1,34 @@
+{
+    "name": "tomtroc/book-exchange",
+    "description": "Plateforme d'échange de livres TomTroc",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Controllers\\": "app/controllers/",
+            "App\\Models\\": "app/models/",
+            "App\\Core\\": "app/core/",
+            "App\\Config\\": "config/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

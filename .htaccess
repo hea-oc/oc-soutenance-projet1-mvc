@@ -1,0 +1,29 @@
+RewriteEngine On
+
+# Serve static files directly if they exist
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Map storage/ to public/storage/
+RewriteCond %{REQUEST_URI} (.*/)?storage/
+RewriteRule ^(.*/)?storage/(.*)$ public/storage/$2 [L]
+
+# Route everything else to public/index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ public/index.php [QSA,L]
+
+# Deny access to sensitive directories
+RewriteRule ^app/ - [F,L]
+RewriteRule ^config/ - [F,L]
+RewriteRule ^database/ - [F,L]
+RewriteRule ^logs/ - [F,L]
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options DENY
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    # Content Security Policy - adjust according to your needs
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self';"
+</IfModule>
