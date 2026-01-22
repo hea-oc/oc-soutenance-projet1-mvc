@@ -57,18 +57,18 @@
                         <input type="file" id="avatar-file-input" name="avatar" accept="image/*" style="display: none;">
 
                         <div class="form-group">
-                            <label>Adresse email</label>
-                            <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                            <label for="email">Adresse email</label>
+                            <input type="email" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8'); ?>" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Mot de passe</label>
-                            <input type="password" name="password" class="form-control" placeholder="Laissez vide pour ne pas changer">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Laissez vide pour ne pas changer">
                         </div>
 
                         <div class="form-group">
-                            <label>Pseudo</label>
-                            <input type="text" name="pseudo" class="form-control" value="<?php echo htmlspecialchars($user['pseudo'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                            <label for="pseudo">Pseudo</label>
+                            <input type="text" name="pseudo" id="pseudo" class="form-control" value="<?php echo htmlspecialchars($user['pseudo'], ENT_QUOTES, 'UTF-8'); ?>" required>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Enregistrer</button>

@@ -103,7 +103,7 @@
                 <p style="margin-top: 2rem; font-style: italic; color: var(--color-text-secondary);">L'équipe Tom Troc</p>
             </div>
             <div class="values-art">
-                <img src="<?php echo BASE_URL; ?>/public/img/Vector 2@2x.png" alt="Valeurs Tom Troc" />
+                <img src="<?php echo BASE_URL; ?>/public/img/vector-2-2x.png" alt="Valeurs Tom Troc" />
             </div>
         </div>
     </div>
