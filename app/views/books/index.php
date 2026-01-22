@@ -10,6 +10,7 @@
                         name="q"
                         class="form-control search-input-small"
                         placeholder="Rechercher un livre"
+                        aria-label="Rechercher un livre"
                         value="<?php echo isset($query) ? htmlspecialchars($query, ENT_QUOTES, 'UTF-8') : ''; ?>"
                     />
                 </div>
@@ -36,11 +37,11 @@
                         />
                     </a>
                     <div class="card-body">
-                        <h3 class="card-title">
+                        <h2 class="card-title">
                             <a href="<?php echo BASE_URL; ?>/books/show?id=<?php echo htmlspecialchars($book['id'], ENT_QUOTES, 'UTF-8'); ?>">
                                 <?php echo htmlspecialchars($book['title'], ENT_QUOTES, 'UTF-8'); ?>
                             </a>
-                        </h3>
+                        </h2>
                         <p class="card-subtitle"><?php echo htmlspecialchars($book['author'], ENT_QUOTES, 'UTF-8'); ?></p>
                         <p class="card-text mb-3">Vendu par :
                             <a href="<?php echo BASE_URL; ?>/user?id=<?php echo htmlspecialchars($book['user_id'], ENT_QUOTES, 'UTF-8'); ?>" style="color: var(--color-primary); text-decoration: none;">

@@ -1,6 +1,6 @@
-<!--- Affichage des détails d'un livre spécifique --->
+<!-- Affichage des détails d'un livre spécifique -->
 <div class="book-detail-wrapper">
-    <div class="container" style="color:gray;padding-top:1rem;">
+    <div class="container" style="color:#545454;padding-top:1rem;">
         <a href="../books">Nos livres</a> > <?php echo htmlspecialchars($book['title'], ENT_QUOTES, 'UTF-8'); ?>
     </div>
     <div class="book-detail-container">
@@ -20,7 +20,7 @@
 
             <?php if ($book['description']) : ?>
                 <div class="book-detail-section">
-                    <h3 class="book-detail-section-label">DESCRIPTION</h3>
+                    <h2 class="book-detail-section-label">DESCRIPTION</h2>
                     <p class="book-detail-description"><?php echo nl2br(htmlspecialchars($book['description'], ENT_QUOTES, 'UTF-8')); ?></p>
                 </div>
             <?php endif; ?>

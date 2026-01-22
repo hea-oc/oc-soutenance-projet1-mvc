@@ -19,6 +19,8 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/style-min.css">
 </head>
 <body>
+    <!-- Skip link pour l'accessibilité WCAG 2.4.1 -->
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
     <header>
         <div class="header-container">
@@ -72,7 +74,7 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <?php echo $content; ?>
     </main>
 

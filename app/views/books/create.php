@@ -55,8 +55,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Disponibilité</label>
-                    <select name="status" class="form-control">
+                    <label for="status">Disponibilité</label>
+                    <select name="status" id="status" class="form-control">
                         <option value="available">Disponible</option>
                         <option value="unavailable">Non disponible</option>
                     </select>

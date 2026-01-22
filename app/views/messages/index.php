@@ -93,6 +93,7 @@
                                     name="content"
                                     class="message-input"
                                     placeholder="Écrivez votre message..."
+                                    aria-label="Contenu du message"
                                     required
                                 ></textarea>
                                 <button type="submit" class="btn-send">Envoyer</button>

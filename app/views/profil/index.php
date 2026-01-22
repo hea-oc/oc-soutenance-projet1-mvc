@@ -8,14 +8,14 @@
                     <div class="profile-avatar-section">
                         <div class="profile-avatar" id="profile-avatar">
                             <?php if ($user['avatar']) : ?>
-                                <img src="<?php echo BASE_URL; ?>/<?php echo htmlspecialchars($user['avatar'], ENT_QUOTES, 'UTF-8'); ?>" alt="Avatar" id="avatar-preview">
+                                <img src="<?php echo BASE_URL; ?>/<?php echo htmlspecialchars($user['avatar'], ENT_QUOTES, 'UTF-8'); ?>" alt="Avatar de <?php echo htmlspecialchars($user['pseudo'], ENT_QUOTES, 'UTF-8'); ?>" id="avatar-img-preview">
                             <?php else : ?>
-                                <div class="avatar-placeholder" id="avatar-preview">
+                                <div class="avatar-placeholder" id="avatar-placeholder-preview">
                                     <?php echo strtoupper(substr($user['pseudo'], 0, 2)); ?>
                                 </div>
                             <?php endif; ?>
                         </div>
-                        <a href="#" class="profile-modify-link" onclick="document.getElementById('avatar-file-input').click(); return false;">modifier</a>
+                        <button type="button" class="profile-modify-link" onclick="document.getElementById('avatar-file-input').click();">Modifier l'avatar</button>
                     </div>
 
                     <hr class="profile-divider">
@@ -54,7 +54,7 @@
 
                     <form action="<?php echo BASE_URL; ?>/profil/edit" method="post" id="profile-form" enctype="multipart/form-data">
                         <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token ?? '', ENT_QUOTES, 'UTF-8'); ?>">
-                        <input type="file" id="avatar-file-input" name="avatar" accept="image/*" style="display: none;">
+                        <input type="file" id="avatar-file-input" name="avatar" accept="image/*" style="display: none;" aria-label="Sélectionner une image pour l'avatar">
 
                         <div class="form-group">
                             <label for="email">Adresse email</label>
@@ -135,7 +135,7 @@ document.getElementById('avatar-file-input').addEventListener('change', function
         const reader = new FileReader();
         reader.onload = function(event) {
             const avatarContainer = document.getElementById('profile-avatar');
-            avatarContainer.innerHTML = '<img src="' + event.target.result + '" alt="Avatar" id="avatar-preview" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">';
+            avatarContainer.innerHTML = '<img src="' + event.target.result + '" alt="Aperçu du nouvel avatar" id="avatar-img-preview" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">';
         }
         reader.readAsDataURL(e.target.files[0]);
     }

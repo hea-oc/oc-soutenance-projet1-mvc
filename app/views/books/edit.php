@@ -1,8 +1,8 @@
 <!-- Page d'édition des informations d'un livre spécifique -->
 <div class="book-edit-wrapper">
-    <div class="container" style="color:gray;padding-top:1rem;">
-        <a href="<?php echo BASE_URL; ?>/profil">← retour</a>
-    </div>
+    <nav class="container" style="padding-top:1rem;" aria-label="Fil d'Ariane">
+        <a href="<?php echo BASE_URL; ?>/profil" style="color:#555;">← Retour au profil</a>
+    </nav>
 
     <div class="book-edit-header">
         <div class="container">
@@ -21,17 +21,17 @@
     <div class="book-edit-container">
         <div class="book-edit-image">
             <?php if (isset($book['image']) && $book['image']) : ?>
-                <img src="<?php echo BASE_URL; ?>/<?php echo htmlspecialchars($book['image'], ENT_QUOTES, 'UTF-8'); ?>" alt="Photo du livre" id="preview-image">
+                <img src="<?php echo BASE_URL; ?>/<?php echo htmlspecialchars($book['image'], ENT_QUOTES, 'UTF-8'); ?>" alt="Photo du livre <?php echo htmlspecialchars($book['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" id="book-preview-image">
             <?php else : ?>
-                <img src="<?php echo BASE_URL; ?>/public/img/book-placeholder.jpg" alt="Photo du livre" id="preview-image">
+                <img src="<?php echo BASE_URL; ?>/public/img/book-placeholder.jpg" alt="Photo du livre" id="book-preview-image">
             <?php endif; ?>
-            <button type="button" class="btn-modify-photo" onclick="document.getElementById('image').click()">Modifier la photo</button>
+            <button type="button" class="btn-modify-photo" onclick="document.getElementById('book-image-input').click();">Modifier la photo</button>
         </div>
 
         <div class="book-edit-content">
             <form action="<?php echo BASE_URL; ?>/books/edit?id=<?php echo htmlspecialchars($book['id'], ENT_QUOTES, 'UTF-8'); ?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
-                <input type="file" id="image" name="image" style="display: none;" accept="image/*" onchange="previewImage(event)">
+                <input type="file" id="book-image-input" name="image" style="display: none;" accept="image/*" onchange="previewImage(event)" aria-label="Sélectionner une image pour le livre">
 
                 <div class="form-group">
                     <label for="title">Titre</label>
@@ -71,8 +71,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Disponibilité</label>
-                    <select name="status" class="form-control">
+                    <label for="status">Disponibilité</label>
+                    <select name="status" id="status" class="form-control">
                         <option value="available" <?php echo (isset($book['status']) && htmlspecialchars($book['status'], ENT_QUOTES, 'UTF-8') === 'available') ? 'selected' : ''; ?>>disponible</option>
                         <option value="unavailable" <?php echo (isset($book['status']) && htmlspecialchars($book['status'], ENT_QUOTES, 'UTF-8') === 'unavailable') ? 'selected' : ''; ?>>non disponible</option>
                     </select>
@@ -90,7 +90,7 @@ function previewImage(event) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            document.getElementById('preview-image').src = e.target.result;
+            document.getElementById('book-preview-image').src = e.target.result;
         }
         reader.readAsDataURL(file);
     }
