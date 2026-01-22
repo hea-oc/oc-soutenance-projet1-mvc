@@ -128,7 +128,7 @@ class ProfilController extends Controller
                     return;
                 }
 
-                $extension = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
+                $extension = strtolower(pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION));
                 $filename = 'avatar_' . $_SESSION['user_id'] . '_' . time() . '.' . $extension;
                 $uploadFile = $uploadDir . $filename;
 

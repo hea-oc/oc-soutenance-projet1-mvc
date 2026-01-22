@@ -7,6 +7,40 @@ use Models\Book;
 
 class BookController extends Controller
 {
+    /**
+     * Normalise un nom de fichier pour être conforme W3C
+     * - Supprime les accents
+     * - Remplace les espaces et caractères spéciaux par des tirets
+     * - Met en minuscules
+     */
+    private function normalizeFilename(string $filename): string
+    {
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $name = pathinfo($filename, PATHINFO_FILENAME);
+
+        // Translitération des accents
+        $name = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $name);
+
+        // Remplacer les caractères non alphanumériques par des tirets
+        $name = preg_replace('/[^a-zA-Z0-9\-]/', '-', $name);
+
+        // Supprimer les tirets multiples
+        $name = preg_replace('/-+/', '-', $name);
+
+        // Supprimer les tirets en début et fin
+        $name = trim($name, '-');
+
+        // Mettre en minuscules
+        $name = strtolower($name);
+
+        // Si le nom est vide après nettoyage, utiliser un nom par défaut
+        if (empty($name)) {
+            $name = 'image';
+        }
+
+        return $name . '.' . strtolower($extension);
+    }
+
     public function index(): void
     {
         if (!isset($_SESSION['user_id'])) {
@@ -99,7 +133,8 @@ class BookController extends Controller
                     if (!is_dir($uploadDir)) {
                         mkdir($uploadDir, 0777, true);
                     }
-                    $filename = uniqid() . '_' . basename($_FILES['image']['name']);
+                    $normalizedName = $this->normalizeFilename(basename($_FILES['image']['name']));
+                    $filename = uniqid() . '_' . $normalizedName;
                     $uploadFile = $uploadDir . $filename;
 
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
@@ -112,7 +147,7 @@ class BookController extends Controller
                     }
                 }
 
-                $this->redirect(BASE_URL . '/my-books');
+                $this->redirect(BASE_URL . '/profil');
             } else {
                 $this->render('books/create', ['error' => 'Failed to add book']);
             }
@@ -178,7 +213,8 @@ class BookController extends Controller
                 if (!is_dir($uploadDir)) {
                     mkdir($uploadDir, 0777, true);
                 }
-                $filename = uniqid() . '_' . basename($_FILES['image']['name']);
+                $normalizedName = $this->normalizeFilename(basename($_FILES['image']['name']));
+                $filename = uniqid() . '_' . $normalizedName;
                 $uploadFile = $uploadDir . $filename;
 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
@@ -237,41 +273,15 @@ class BookController extends Controller
 
         $id = $_GET['id'] ?? null;
         if (!$id) {
-            $this->redirect(BASE_URL . '/my-books');
+            $this->redirect(BASE_URL . '/profil');
         }
 
         $bookModel = new Book();
         if ($bookModel->delete((int)$id, $_SESSION['user_id'])) {
-            $this->redirect(BASE_URL . '/my-books');
+            $this->redirect(BASE_URL . '/profil');
         } else {
-            $this->redirect(BASE_URL . '/my-books');
+            $this->redirect(BASE_URL . '/profil');
         }
     }
-    // Changer le statut du livre
-    public function toggleStatus(): void
-    {
-        if (!isset($_SESSION['user_id'])) {
-            $this->redirect(BASE_URL . '/login');
-        }
 
-        $id = $_GET['id'] ?? null;
-        $status = $_GET['status'] ?? null;
-
-        if (!$id || !$status) {
-            $this->redirect(BASE_URL . '/my-books');
-        }
-
-        // Validation du statut
-        $allowedStatuses = ['available', 'borrowed', 'unavailable'];
-        if (!in_array($status, $allowedStatuses)) {
-            $this->redirect(BASE_URL . '/my-books');
-        }
-
-        $bookModel = new Book();
-        if ($bookModel->updateStatus((int)$id, $_SESSION['user_id'], $status)) {
-            $this->redirect(BASE_URL . '/my-books');
-        } else {
-            $this->redirect(BASE_URL . '/my-books');
-        }
-    }
 }
